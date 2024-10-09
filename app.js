@@ -1,8 +1,13 @@
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const db = require('./src/dbconfig/db');
+const userRegisterRouter = require('./src/Routes/userRegisterRouter');
+const adminRegisterRouter = require('./src/Routes/adminRegisterRouter');
+const userLoginRouter = require('./src/Routes/userLoginRouter');
+const adminLoginRouter = require('./src/Routes/adminLoginRouter');
 
 const app = express();
 db();
@@ -30,6 +35,10 @@ app.get('/', (req, res) => {
   console.log(`[${req.method}] ${req.url} - Health check passed`, 'HealthCheck');
   res.status(200).json({ status: 'OK', message: 'Health check passed' });
 });
+app.use('/user',userRegisterRouter);
+app.use('/user', userLoginRouter);
+app.use('/admin', adminRegisterRouter);
+app.use('/admin', adminLoginRouter);
 
 
 const port = process.env.PORT || 5000;
