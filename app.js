@@ -8,6 +8,11 @@ const userRegisterRouter = require('./src/Routes/userRegisterRouter');
 const adminRegisterRouter = require('./src/Routes/adminRegisterRouter');
 const userLoginRouter = require('./src/Routes/userLoginRouter');
 const adminLoginRouter = require('./src/Routes/adminLoginRouter');
+const getAdminsRouter = require('./src/Routes/getAdminsRouter');
+const uploadAssignRouter = require('./src/Routes/uploadAssignRouter');
+const verifyTokenRouter = require('./src/Routes/verifyTokenRouter');
+const updateAssignStatusRouter = require('./src/Routes/updateAssignStatusRouter');
+const getAssignedTasksRouter = require('./src/Routes/getAssignedTasksRouter');
 
 const app = express();
 db();
@@ -35,10 +40,15 @@ app.get('/', (req, res) => {
   console.log(`[${req.method}] ${req.url} - Health check passed`, 'HealthCheck');
   res.status(200).json({ status: 'OK', message: 'Health check passed' });
 });
+app.use('/auth', verifyTokenRouter);
 app.use('/user',userRegisterRouter);
 app.use('/user', userLoginRouter);
+app.use('/user', uploadAssignRouter);
+app.use('/user', getAdminsRouter);
 app.use('/admin', adminRegisterRouter);
 app.use('/admin', adminLoginRouter);
+app.use('/admin', updateAssignStatusRouter);
+app.use('/admin', getAssignedTasksRouter);
 
 
 const port = process.env.PORT || 5000;

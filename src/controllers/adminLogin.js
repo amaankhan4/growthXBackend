@@ -22,7 +22,7 @@ const adminLogin = async (req, res) => {
 
         const { password: pass, ...rest } = admin._doc;
 
-        res.cookie("access_token", token, { httpOnly: true, secure: true, sameSite: 'Strict' })
+        res.cookie("auth-token", token, { httpOnly: true, secure: true, sameSite: 'Strict' })
         .status(200)
         .json({ ...rest, token, message: 'Login successful' });
 

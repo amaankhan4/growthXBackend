@@ -23,9 +23,11 @@ const userSchema = new schema({
 });
 
 const assignmentSchema = new schema({
-    userId:{type: String, required: true},
+    userId:{type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+    name:{type: String, required: true},
     task:{type: String, required: true},
-    admin:{type: String, required: true},
+    admin:{type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Admin'},
+    status:{type:String, enum: ['pending', 'accepted', 'rejected'], default: 'pending'},
 });
 
 const userValidation = (user) => {
@@ -38,7 +40,7 @@ const userValidation = (user) => {
 }
 const assignmentValidation = (assignment) => { 
     const schema = joi.object({
-        userId: joi.string().required(),
+        name: joi.string().required(),
         task: joi.string().required(),
         admin: joi.string().required(),
     });
